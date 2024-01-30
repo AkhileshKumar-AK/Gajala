@@ -2,6 +2,8 @@
 import pyaudio
 import wave
 import subprocess
+from pydub import AudioSegment
+from pydub.playback import play
 
 def record_audio(output_file, duration=5, sample_rate=44100, channels=2, chunk_size=1024):
     p = pyaudio.PyAudio()
@@ -40,6 +42,9 @@ def execute_helper_script():
         subprocess.run(['python', 'main.py',"C:/Users/HP/Desktop/py/gajala/files/audio.wav"], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error executing helper script: {e}")
+        sound = AudioSegment.from_mp3("default.wav")
+        print("\n Gajala confused \n")
+        play(sound)
 
 if __name__ == "__main__":
     output_file = "C:/Users/HP/Desktop/py/gajala/files/audio.wav"

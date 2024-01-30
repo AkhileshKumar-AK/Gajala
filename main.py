@@ -7,9 +7,11 @@ from pydub.playback import play
 import pyaudio
 import wave
 import sys
+import time
+import subprocess
 
 transcript = None
-my_secret = "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"
+my_secret = "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"
 client = OpenAI(api_key=my_secret)
 
 # Set up Wit.ai token and API URL
@@ -22,6 +24,14 @@ wit_session.headers.update({
     'Authorization': f'Bearer {WIT_TOKEN}',
     'Content-Type': 'application/json',
 })
+
+def gajala_confused():
+    sound = AudioSegment.from_mp3("default.wav")
+    print("\n Gajala confused \n")
+    play(sound)
+    time.sleep(5)
+    print("\n speak again... \n")
+    subprocess.run(['python', 'test.py'], check=True)
 
 def speechToText(file_path):
     audio_file = open(file_path, "rb")
@@ -47,6 +57,8 @@ def handle_response(response):
       wit_response(response.json())
   else:
       print(f"Error {response.status_code}: {response.text}")
+      gajala_confused()
+      
 
 def traits(t):
   keys = t.keys()
@@ -57,6 +69,8 @@ def traits(t):
       sound = AudioSegment.from_mp3("gajala.wav")
       print("Playing gajala sound ...")
       play(sound)
+    else:
+        gajala_confused()
 
 def wit_response(a):
   #print(a)
@@ -65,13 +79,15 @@ def wit_response(a):
   #print(f"Traits --> {a['traits']}\n" if a['traits'] else "No Traits\n")
   if a['traits']:
       traits(a['traits'])
-
+  else:
+      gajala_confused()
 
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python main.py <file_path>")
+        gajala_confused()
         sys.exit(1)
     print(sys.argv)
     file_path = sys.argv[1]
