@@ -11,7 +11,7 @@ import time
 import subprocess
 
 transcript = None
-my_secret = "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"
+my_secret = "sk-********************" #Openai API KEY
 client = OpenAI(api_key=my_secret)
 
 # Set up Wit.ai token and API URL
