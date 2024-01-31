@@ -1,4 +1,4 @@
-
+# pip install pyaudio pydub
 import pyaudio
 import wave
 import subprocess
